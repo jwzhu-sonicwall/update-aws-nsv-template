@@ -4,7 +4,9 @@
 name: update aws template
 
 on:
-  push
+  push:
+    branches-ignore:
+      - 'dependabot/**'
 
 jobs:
   update-aws-template:
