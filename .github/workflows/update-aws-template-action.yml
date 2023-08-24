@@ -1,0 +1,51 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: update aws template
+
+on:
+  push
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  update-aws-template:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install botocore
+        pip install PyGithub
+        pip install GitPython
+    - name: write aws config file
+      run: |
+        mkdir -p ~/.aws/
+        echo -e "[default]\nregion = ap-northeast-2" > ~/.aws/config
+        echo -e "[default]\naws_access_key_id = ${{ secrets.aws_key_id }}\naws_secret_access_key = ${{ secrets.aws_key }}" > ~/.aws/credentials
+    - name: upload public key
+      env:
+        token_Private_Keys: ${{ secrets.token_Private_Keys }}
+      run: |
+        mkdir -p ~/.ssh/
+        echo "$token_Private_Keys" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+    - name: run script and set env variable
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_FETCH_URL: git@github.com:Ripple-zjw/sonicwall-nsv-aws-cf-templates-master.git
+        GITHUB_PUSH_URL: git@github.com:jwzhu-sonicwall/sonicwall-nsv-aws-cf-templates-master.git
+        GIT_CONFIG_USER: sonicwall
+        GIT_CONFIG_EMAIL: aaa@aaa.com
+        WORK_BRANCH: update-ami-template
+      run:
+        python3 aws_template_git.py
