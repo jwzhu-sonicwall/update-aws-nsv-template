@@ -72,7 +72,7 @@ class HandleGit:
             f.write(content)
 
 if __name__ == '__main__':
-    token = os.getenv('GITHUB_TOKEN')
+    token = os.getenv('GITHUB_TK')
     push_url = os.getenv('GITHUB_PUSH_URL')
     fetch_url = os.getenv('GITHUB_FETCH_URL')
     repo = push_url[15:-4]
