@@ -3,8 +3,7 @@
 name: update aws template
 
 on:
-  schedule:
-    - cron: '12 3 * * *'
+  push
 
 permissions: write-all
 
