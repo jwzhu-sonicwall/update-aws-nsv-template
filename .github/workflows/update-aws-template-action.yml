@@ -50,5 +50,4 @@ jobs:
         GIT_CONFIG_EMAIL: aaa@aaa.com
         WORK_BRANCH: update-ami-template
       run:
-        echo ${{ secrets.token }} > tok
         python3 aws_template_git.py
