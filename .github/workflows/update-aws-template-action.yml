@@ -4,7 +4,12 @@
 name: update aws template
 
 on:
-  push
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 permissions: write-all
 
