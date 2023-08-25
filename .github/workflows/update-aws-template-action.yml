@@ -43,7 +43,7 @@ jobs:
         chmod 600 ~/.ssh/id_ed25519
     - name: run script and set env variable
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.token }}
         GITHUB_FETCH_URL: git@github.com:Ripple-zjw/sonicwall-nsv-aws-cf-templates-master.git
         GITHUB_PUSH_URL: git@github.com:jwzhu-sonicwall/sonicwall-nsv-aws-cf-templates-master.git
         GIT_CONFIG_USER: sonicwall
